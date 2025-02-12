@@ -35,7 +35,7 @@ unit UniqueInstance;
 
 {$mode objfpc}{$H+}
 {$if not defined(Windows) or (FPC_FULLVERSION >= 30001)}
-{$define PollIPCMessage}
+  {$define PollIPCMessage}
 {$endif}
 
 interface
@@ -57,9 +57,9 @@ type
     FEnabled: Boolean;
     FPriorInstanceRunning: Boolean;
     procedure ReceiveMessage(Sender: TObject);
-    {$ifdef PollIPCMessage}
+{$ifdef PollIPCMessage}
     procedure CheckMessage(Sender: TObject);
-    {$endif}
+{$endif}
   protected
     procedure Loaded; override;
   public

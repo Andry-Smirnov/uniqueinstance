@@ -1,11 +1,28 @@
 unit Unit1; 
 
+
 {$mode objfpc}{$H+}
+
 
 interface
 
+
 uses
-  Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, StdCtrls;
+{$IFDEF unix}
+  BaseUnix,
+{$ENDIF}
+{$IFDEF windows}
+  Windows,
+{$ENDIF}
+  Classes,
+  SysUtils,
+  LResources,
+  Forms,
+  Controls,
+  Graphics,
+  Dialogs,
+  StdCtrls;
+
 
 type
 
@@ -15,41 +32,35 @@ type
     ButCrashApp: TButton;
     procedure ButCrashAppClick(Sender: TObject);
   private
-    { private declarations }
   public
-    { public declarations }
   end; 
+
 
 var
   Form1: TForm1; 
 
+
 implementation
+
 
 {$R *.lfm}
 
-{$ifdef unix}
-uses
-  BaseUnix;
-{$endif}
-
-{$ifdef windows}
-uses
-  Windows;
-{$endif}
 
 { TForm1 }
 
 procedure TForm1.ButCrashAppClick(Sender: TObject);
 begin
-  {$ifdef unix}
+{$IFDEF unix}
   FpKill(FpGetpid, 9);
-  {$endif}
-  {$ifdef windows}
+{$ENDIF}
+{$IFDEF windows}
   TerminateProcess(GetCurrentProcess, 0);
-  {$endif}
+{$ENDIF}
 end;
 
+
 initialization
+
 
 end.
 
