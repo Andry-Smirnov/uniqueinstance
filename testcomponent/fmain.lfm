@@ -1,4 +1,4 @@
-object Form1: TForm1
+object MainForm: TMainForm
   Left = 464
   Height = 280
   Top = 339
@@ -11,7 +11,7 @@ object Form1: TForm1
   ClientHeight = 280
   ClientWidth = 340
   Position = poScreenCenter
-  LCLVersion = '1.7'
+  LCLVersion = '3.6.0.0'
   object Label1: TLabel
     Left = 8
     Height = 15
@@ -35,8 +35,8 @@ object Form1: TForm1
     Width = 136
     BorderSpacing.InnerBorder = 4
     Caption = 'Crash Application'
-    OnClick = CrashAppButtonClick
     TabOrder = 1
+    OnClick = CrashAppButtonClick
   end
   object ShowDialogButton: TButton
     Left = 192
@@ -44,15 +44,22 @@ object Form1: TForm1
     Top = 248
     Width = 136
     Caption = 'Show Dialog'
-    OnClick = ShowDialogButtonClick
     TabOrder = 2
+    OnClick = ShowDialogButtonClick
   end
   object UniqueInstance1: TUniqueInstance
     Enabled = True
     Identifier = 'test0.1'
     UpdateInterval = 800
     OnOtherInstance = UniqueInstance1OtherInstance
-    left = 152
-    top = 104
+    Left = 152
+    Top = 104
+  end
+  object SimpleIPCServer1: TSimpleIPCServer
+    Active = False
+    Global = False
+    Threaded = False
+    Left = 152
+    Top = 40
   end
 end

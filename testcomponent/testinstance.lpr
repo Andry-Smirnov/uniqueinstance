@@ -3,18 +3,20 @@ program testinstance;
 {$mode objfpc}{$H+}
 
 uses
-  {$IFDEF UNIX}{$IFDEF UseCThreads}
+{$IFDEF UNIX}
+  {$IFDEF UseCThreads}
   cthreads,
-  {$ENDIF}{$ENDIF}
+  {$ENDIF}
+{$ENDIF}
   Interfaces, // this includes the LCL widgetset
-  Forms
-  { add your units here }, fMain;
+  Forms,
+  fMain;
 
 {$R *.res}
 
 begin
-  Application.Title := 'UniqueInstanceTest';
+  Application.Title:='UniqueInstanceTest';
   Application.Initialize;
-  Application.CreateForm(TForm1, Form1);
+  Application.CreateForm(TMainForm, MainForm);
   Application.Run;
 end.

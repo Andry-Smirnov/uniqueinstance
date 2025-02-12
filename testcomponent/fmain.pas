@@ -1,58 +1,62 @@
 unit fMain;
 
+
 {$mode objfpc}{$H+}
+
 
 interface
 
+
 uses
-  Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs,
-  UniqueInstance, StdCtrls, ExtCtrls;
+{$IFDEF unix}
+  BaseUnix,
+{$ENDIF}
+{$IFDEF windows}
+  Windows,
+{$ENDIF}
+  Classes, SysUtils, simpleipc, LResources, Forms, Controls, Graphics, Dialogs,
+  StdCtrls, ExtCtrls,
+  UniqueInstance
+  ;
 
 type
 
-  { TForm1 }
+  { TMainForm }
 
-  TForm1 = class(TForm)
+  TMainForm = class(TForm)
     CrashAppButton: TButton;
     ShowDialogButton: TButton;
     Label1: TLabel;
     ListBox1: TListBox;
+    SimpleIPCServer1: TSimpleIPCServer;
     UniqueInstance1: TUniqueInstance;
     procedure CrashAppButtonClick(Sender: TObject);
     procedure ShowDialogButtonClick(Sender: TObject);
     procedure UniqueInstance1OtherInstance(Sender: TObject; Count: Integer;
       Parameters: array of String);
   private
-    { private declarations }
   public
-    { public declarations }
   end; 
 
+
 var
-  Form1: TForm1; 
+  MainForm: TMainForm;
+
 
 implementation
 
-{$ifdef unix}
-uses
-  BaseUnix;
-{$endif}
-
-{$ifdef windows}
-uses
-  Windows;
-{$endif}
 
 {$R *.lfm}
 
-{ TForm1 }
 
-procedure TForm1.UniqueInstance1OtherInstance(Sender: TObject; Count: Integer;
+{ TMainForm }
+
+procedure TMainForm.UniqueInstance1OtherInstance(Sender: TObject; Count: Integer;
   Parameters: array of String);
 var
-  i:Integer;
+  i: Integer;
 begin
-  Label1.Caption:=Format('A new instance was created at %s with %d parameter(s):', [TimeToStr(Time), Count]);
+  Label1.Caption := Format('A new instance was created at %s with %d parameter(s):', [TimeToStr(Time), Count]);
   ListBox1.Clear;
   for i := 0 to Count - 1 do
     ListBox1.Items.Add(Parameters[i]);
@@ -62,20 +66,23 @@ begin
   FormStyle := fsNormal;
 end;
 
-procedure TForm1.CrashAppButtonClick(Sender: TObject);
+
+procedure TMainForm.CrashAppButtonClick(Sender: TObject);
 begin
-  {$ifdef unix}
+{$IFDEF unix}
   FpKill(FpGetpid, 9);
-  {$endif}
-  {$ifdef windows}
+{$ENDIF}
+{$IFDEF windows}
   TerminateProcess(GetCurrentProcess, 0);
-  {$endif}
+{$ENDIF}
 end;
 
-procedure TForm1.ShowDialogButtonClick(Sender: TObject);
+
+procedure TMainForm.ShowDialogButtonClick(Sender: TObject);
 begin
   Application.MessageBox('Hi! I am a modal Window!', 'Modal Window Check', MB_ICONINFORMATION);
 end;
+
 
 end.
 
